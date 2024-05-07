@@ -15,8 +15,5 @@ export type Subject = {
 };
 
 export type Library = {
-  istitutionId: number;
-  courseId: number;
-  subjectId: number;
   notes: FileNote[] | TextNote[];
 };

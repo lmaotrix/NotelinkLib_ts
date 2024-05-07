@@ -4,6 +4,9 @@ export type TextNote = {
   title: string;
   text: string;
   createdAt: Date;
+  subjectId: number;
+  courseId: number;
+  institutionId: number;
 };
 
 export type FileNote = {
@@ -12,9 +15,18 @@ export type FileNote = {
   title: string;
   file: URL;
   createdAt: Date;
+  subjectId: number;
+  courseId: number;
+  institutionId: number;
 };
 
-export type Note = {
-  textNote: TextNote;
-  fileNote: FileNote;
+type Note = {
+  userId: number;
+  title: string;
+  text: string;
+  file: URL;
+  createdAt: Date;
+  subjectId: number;
+  courseId: number;
+  institutionId: number;
 };

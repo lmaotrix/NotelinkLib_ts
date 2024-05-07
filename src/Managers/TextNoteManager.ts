@@ -15,7 +15,7 @@ export class TextNoteManager implements ITextNoteManager {
   likeTexNote(textNote: TextNote, user: User): void {
     throw new Error("Method not implemented.");
   }
-  unlikeTextNote(textNote: TextNote, user: User): void {
+  dislikeTextNote(textNote: TextNote, user: User): void {
     throw new Error("Method not implemented.");
   }
 }

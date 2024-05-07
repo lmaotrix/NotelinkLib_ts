@@ -12,7 +12,7 @@ export class FileNoteManager implements IFileNoteManager {
   likeFileNote(fileNote: FileNote, user: User): void {
     throw new Error("Method not implemented.");
   }
-  unlikeFileNote(fileNote: FileNote, user: User): void {
+  dislikeFileNote(fileNote: FileNote, user: User): void {
     throw new Error("Method not implemented.");
   }
 }

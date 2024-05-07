@@ -6,5 +6,5 @@ export interface ITextNoteManager {
   removeTextNote(textNote: TextNote): void;
   updateTextNote(textNote: TextNote): TextNote;
   likeTexNote(textNote: TextNote, user: User): void;
-  unlikeTextNote(textNote: TextNote, user: User): void;
+  dislikeTextNote(textNote: TextNote, user: User): void;
 }
