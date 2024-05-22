@@ -7,10 +7,10 @@ export class MyNotesManager implements IMyNotesManager {
     this._notes = [];
   }
 
-  addNote(note: Note): void {
+  public addNote(note: Note): void {
     this._notes.push(note);
   }
-  getNotes(): Note[] {
+  public getNotes(): Note[] {
     return [...this._notes];
   }
 }
