@@ -1,10 +1,11 @@
 export type User = {
-  userId: number;
-  firstName: string;
-  lastName: string;
   email: string;
-  password: string;
-  userType: UserType;
+  firstName: string;
+  institutionId: number; 
+  lastName: string;
+  noteId: number;
+  type: UserType;
+  userId: number;
 };
 
 enum UserType {

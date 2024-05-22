@@ -1,6 +1,5 @@
 export type LikeNotes = {
   userId: number;
-  fileNoteId: number;
-  textNoteId: number;
+  noteId: number;
   like: boolean;
 };
