@@ -1,6 +1,6 @@
 export type Note = {
   courseId: number;
-  file: URL;
+  file: string;
   institutionId: number;
   isPublic: boolean;
   noteId: number;

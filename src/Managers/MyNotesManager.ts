@@ -1,15 +1,16 @@
-import { IMyNotesManager } from "../Interfaces/IMyNotesManager";
-import { Note } from "../Models/Notes";
+import { IMyNotesManager } from "../Interfaces/ImyNotesManager";
+import { Note } from "../Models/notes";
 
-class MyNotesManager implements IMyNotesManager{
-    private _notes: Note[];
-    public constructor(){
-        this._notes: []; 
-    }
+export class MyNotesManager implements IMyNotesManager {
+  private _notes: Note[];
+  public constructor() {
+    this._notes = [];
+  }
 
-    
-    public addNote(note: Note): void {
-        this._notes.push(note);
-    }
-
+  addNote(note: Note): void {
+    this._notes.push(note);
+  }
+  getNotes(): Note[] {
+    return [...this._notes];
+  }
 }

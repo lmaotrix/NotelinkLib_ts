@@ -1,5 +1,6 @@
-import { Note } from "../Models/Notes";
+import { Note } from "../Models/notes";
 
-export interface IMyNotesManager{
-    addNote(note:Note): void;
+export interface IMyNotesManager {
+  addNote(note: Note): void;
+  getNotes(): Note[];
 }
