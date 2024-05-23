@@ -1,11 +1,5 @@
 export type LikeNote = {
   noteId: number;
   userId: number;
-  vote: LikeType;
+  liked: boolean;
 };
-
-export enum LikeType {
-  Dislike,
-  Like,
- 
-}
