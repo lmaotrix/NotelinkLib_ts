@@ -73,6 +73,17 @@ describe("Class MyNotesManager", () => {
       expect(notes).toEqual([note1, note2]);
     });
   });
+
+  describe("Metodo deleteNote", () => {
+    test("Elimina una nota della lista delle mie note", () => {
+      const myNotesManager = getMyNotesManager();
+      let notes = myNotesManager.getNotes();
+      expect(notes).toEqual([note1, note2]);
+      myNotesManager.deleteNote(note1);
+      notes = myNotesManager.getNotes();
+      expect(notes).toEqual([note2]);
+    });
+  });
 });
 
 describe("Class SharedNotesManager", () => {

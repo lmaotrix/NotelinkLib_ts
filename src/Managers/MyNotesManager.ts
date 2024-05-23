@@ -1,4 +1,4 @@
-import { IMyNotesManager } from "../Interfaces/ImyNotesManager";
+import { IMyNotesManager } from "../Interfaces/IMyNotesManager";
 import { Note } from "../Models/notes";
 
 export class MyNotesManager implements IMyNotesManager {
@@ -9,6 +9,9 @@ export class MyNotesManager implements IMyNotesManager {
 
   public addNote(note: Note): void {
     this._notes.push(note);
+  }
+  deleteNote(note: Note): void {
+    this._notes = this._notes.filter((a) => a !== note);
   }
   public getNotes(): Note[] {
     return [...this._notes];
