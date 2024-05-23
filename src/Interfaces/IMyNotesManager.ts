@@ -1,7 +1,13 @@
 import { Note } from "../Models/notes";
 
 export interface IMyNotesManager {
-  addNote(note: Note): void;
+  createNote(
+    title: string,
+    text: string,
+    file: string,
+    isPublic: boolean
+  ): Note;
   deleteNote(note: Note): void;
   getNotes(): Note[];
+  isPublicNote(note: Note): void;
 }
