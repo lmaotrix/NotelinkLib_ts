@@ -1,7 +1,4 @@
-import { INote } from "../Interfaces/INoteManager";
-import { User } from "./users";
-
-export class Note implements INote {
+export class Note {
   private _courseId: number;
   private _file: string;
   private _isPublic: boolean;
@@ -43,8 +40,5 @@ export class Note implements INote {
   }
   get userId() {
     return this._userId;
-  }
-  toggleisPublic() {
-    this._isPublic = !this._isPublic;
   }
 }

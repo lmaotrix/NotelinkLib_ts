@@ -10,14 +10,14 @@ export class User {
     firstName: string,
     lastName: string,
     email: string,
-    institutionId: number
+    institutionId: number,
+    userId: number
   ) {
     this._firstName = firstName;
     this._lastName = lastName;
     this._email = email;
     this._institutionId = institutionId;
-    const idManager = new NumericIdentityManager();
-    this._userId = idManager.newValue();
+    this._userId = userId;
   }
   get userId() {
     return this._userId;
