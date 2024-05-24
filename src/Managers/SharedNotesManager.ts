@@ -23,13 +23,13 @@ export class SharedNotesManager implements ISharedNotesManager {
   //   );
   //   return clonedNote;
   // }
-  // getSharedNotes(allNotes: Note[]): Note[] {
-  //   this._sharedNotes = allNotes.filter((a) => a.isPublic);
-  //   return [...this._sharedNotes];
-  // }
-  // likedNote(noteId: number, userId: number, liked: boolean): void {
-  //   throw new Error("Method not implemented.");
-  // }
+  getSharedNotes(allNotes: Note[]): Note[] {
+    this._sharedNotes = allNotes.filter((a) => a.isPublic);
+    return [...this._sharedNotes];
+  }
+  likedNote(noteId: number, userId: number, liked: boolean): void {
+    throw new Error("Method not implemented.");
+  }
 
   // public likedNote(note: Note, user: User, vote: LikeType): LikeNote[] {
   //   if (vote === LikeType.Like) {
