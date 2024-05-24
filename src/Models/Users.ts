@@ -1,5 +1,3 @@
-import { NumericIdentityManager } from "@mantlebee/ts-core";
-
 export class User {
   private _email: string;
   private _firstName: string;
@@ -10,14 +8,14 @@ export class User {
     firstName: string,
     lastName: string,
     email: string,
-    institutionId: number
+    institutionId: number,
+    userId: number
   ) {
     this._firstName = firstName;
     this._lastName = lastName;
     this._email = email;
     this._institutionId = institutionId;
-    const idManager = new NumericIdentityManager();
-    this._userId = idManager.newValue();
+    this._userId = this.userId;
   }
   get userId() {
     return this._userId;
