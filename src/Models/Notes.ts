@@ -1,5 +1,3 @@
-import { NumericIdentityManager } from "@mantlebee/ts-core";
-
 import { INote } from "../Interfaces/INoteManager";
 import { User } from "./users";
 

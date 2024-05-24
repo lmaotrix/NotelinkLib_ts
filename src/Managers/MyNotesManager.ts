@@ -29,7 +29,8 @@ export class MyNotesManager implements IMyNotesManager {
     return note;
   }
   public deleteNote(note: Note): void {
-    this._notes = this._notes.filter((a) => a !== note);
+    const index = this._notes.indexOf(note);
+    if (index !== -1) this._notes.splice(index, 1);
   }
   getNotes(): Note[] {
     return [...this._notes];

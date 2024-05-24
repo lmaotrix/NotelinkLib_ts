@@ -10,19 +10,19 @@ export class SharedNotesManager implements ISharedNotesManager {
     this._sharedNotes = [];
   }
 
-  addToMyNotes(note: Note): Note {
-    const idManager = new NumericIdentityManager();
-    const clonedNote = new Note(
-      note.title,
-      note.text,
-      "",
-      false,
-      note.courseId,
-      idManager.newValue(),
-      note.userId
-    );
-    return clonedNote;
-  }
+  // addToMyNotes(note: Note): Note {
+  //   const idManager = new NumericIdentityManager();
+  //   const clonedNote = new Note(
+  //     note.title,
+  //     note.text,
+  //     "",
+  //     false,
+  //     note.courseId,
+  //     idManager.newValue(),
+  //     note.userId
+  //   );
+  //   return clonedNote;
+  // }
   getSharedNotes(allNotes: Note[]): Note[] {
     this._sharedNotes = allNotes.filter((a) => a.isPublic);
     return [...this._sharedNotes];

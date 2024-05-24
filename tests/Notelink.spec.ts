@@ -7,19 +7,17 @@ import {
   jest,
   test,
 } from "@jest/globals";
+
 import { NumericIdentityManager } from "@mantlebee/ts-core";
 
 import { Course, Institution } from "../src/Models/institutionsAndCourses";
 import { Note } from "../src/Models/notes";
 import { User } from "../src/Models/users";
+import { MyNotesManager } from "../src/Managers/myNotesManager";
 
 const idManager = new NumericIdentityManager();
-const poliInstitution = new Institution(
-  idManager.newValue(),
-  "Politecnico di Milano"
-);
+const poliInstitution = new Institution("Politecnico di Milano");
 const matematicaCourse = new Course(
-  idManager.newValue(),
   "Matematica",
   poliInstitution.institutionId
 );
@@ -27,8 +25,7 @@ const anandaUser = new User(
   "Ananda",
   "Langhans",
   "a.langhans@vesenda.com",
-  poliInstitution.institutionId,
-  idManager.newValue()
+  poliInstitution.institutionId
 );
 
 const note1 = new Note(
@@ -37,36 +34,60 @@ const note1 = new Note(
   "",
   true,
   matematicaCourse.courseId,
-  idManager.newValue(),
+  1,
+  anandaUser.userId
+);
+const note2 = new Note(
+  "Nota2",
+  "Sono la nota 2",
+  "",
+  false,
+  matematicaCourse.courseId,
+  2,
   anandaUser.userId
 );
 
-// describe("Class MyNotesManager", () => {
-//   describe("Metodo addNote", () => {
-//     test("Aggiunge una o più note", () => {
-//       const myNotesManager = new MyNotesManager();
-//       let notes = myNotesManager.getNotes();
-//       expect(notes).toEqual([]);
-//       myNotesManager.addNote(note1);
-//       notes = myNotesManager.getNotes();
-//       expect(notes).toEqual([note1]);
-//       myNotesManager.addNote(note2);
-//       notes = myNotesManager.getNotes();
-//       expect(notes).toEqual([note1, note2]);
-//     });
-//   });
+describe("Class MyNotesManager", () => {
+  const myNotesManager = new MyNotesManager();
+  describe("Metodo createNote", () => {
+    test("Crea una o più note", () => {
+      let notes = myNotesManager.getNotes();
+      expect(notes).toEqual([]);
+      myNotesManager.createNote(
+        "Nota1",
+        "Sono la nota 1",
+        "",
+        true,
+        matematicaCourse.courseId,
+        idManager.newValue(),
+        anandaUser.userId
+      );
+      notes = myNotesManager.getNotes();
+      expect(notes).toEqual([note1]);
+      myNotesManager.createNote(
+        "Nota2",
+        "Sono la nota 2",
+        "",
+        false,
+        matematicaCourse.courseId,
+        idManager.newValue(),
+        anandaUser.userId
+      );
+      notes = myNotesManager.getNotes();
+      expect(notes).toEqual([note1, note2]);
+    });
+  });
 
-//   describe("Metodo deleteNote", () => {
-//     test("Elimina una nota della lista delle mie note", () => {
-//       const myNotesManager = getMyNotesManager();
-//       let notes = myNotesManager.getNotes();
-//       expect(notes).toEqual([note1, note2]);
-//       myNotesManager.deleteNote(note1);
-//       notes = myNotesManager.getNotes();
-//       expect(notes).toEqual([note2]);
-//     });
-//   });
-// });
+  describe("Metodo deleteNote", () => {
+    test("Elimina una nota della lista delle mie note", () => {
+      let notes = myNotesManager.getNotes();
+      expect(notes).toEqual([note1, note2]);
+      myNotesManager.deleteNote(note1);
+      notes = myNotesManager.getNotes();
+      expect(notes).toEqual([note1]);
+    });
+  });
+});
 
 // describe("Class SharedNotesManager", () => {
 //   const sharedNotesManager = new SharedNotesManager();
@@ -79,7 +100,7 @@ const note1 = new Note(
 //       sharedNotes = sharedNotesManager.getSharedNotes();
 //       expect(sharedNotes).toEqual([note2]);
 //     });
-//   });
+//});
 
 //   describe("Metodo likeANotes", () => {
 //     test("Mettere like ad una nota", () => {
@@ -93,4 +114,4 @@ const note1 = new Note(
 //       expect(votes).toEqual([vote1, vote2]);
 //     });
 //   });
-// });
+//});
