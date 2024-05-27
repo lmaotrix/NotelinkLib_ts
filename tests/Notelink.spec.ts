@@ -8,45 +8,43 @@ import {
   test,
 } from "@jest/globals";
 
-import { NumericIdentityManager } from "@mantlebee/ts-core";
+// import { NumericIdentityManager } from "@mantlebee/ts-core";
 
 import { Course } from "../src/Models/courses";
 import { Institution } from "../src/Models/institutions";
 import { Note } from "../src/Models/notes";
 import { User } from "../src/Models/users";
 import { MyNotesManager } from "../src/Managers/myNotesManager";
+import { NoteLinkManager } from "../src/Managers/noteLinkManager";
 
-const idManager = new NumericIdentityManager();
-
-const poliInstitution = new Institution(
-  "Politecnico di Milano",
-  idManager.newValue()
+// const idManager = new NumericIdentityManager();
+const noteLinkManager = new NoteLinkManager();
+const poliInstitution = noteLinkManager.createInstitution(
+  "Politecnico di Milano"
 );
-const matematicaCourse = new Course(
+const matematicaCourse = noteLinkManager.createCourse(
   "Matematica",
-  poliInstitution.institutionId,
-  idManager.newValue()
+  poliInstitution.institutionId
 );
-const anandaUser = new User(
+const anandaUser = noteLinkManager.createUser(
   "Ananda",
   "Langhans",
   "a.langhans@vesenda.com",
-  poliInstitution.institutionId,
-  idManager.newValue()
+  poliInstitution.institutionId
 );
-
-const note1 = new Note(
-  "Nota1",
-  "Sono la nota 1",
+const myNotesManager = new MyNotesManager();
+const nota1 = new Note(
+  "Note1",
+  "sono la nota 1",
   "",
   true,
   matematicaCourse.courseId,
   1,
   anandaUser.userId
 );
-const note2 = new Note(
-  "Nota2",
-  "Sono la nota 2",
+const nota2 = new Note(
+  "Note2",
+  "sono la nota 2",
   "",
   false,
   matematicaCourse.courseId,
@@ -55,29 +53,26 @@ const note2 = new Note(
 );
 
 describe("Class MyNotesManager", () => {
-  const myNotesManager = new MyNotesManager();
   describe("Metodo createNote", () => {
     test("Crea una o più note", () => {
       let notes = myNotesManager.getNotes();
       expect(notes).toEqual([]);
-      myNotesManager.createNote(
-        "Nota1",
-        "Sono la nota 1",
+      const note1 = myNotesManager.createNote(
+        "Note1",
+        "sono la nota 1",
         "",
         true,
         matematicaCourse.courseId,
-        idManager.newValue(),
         anandaUser.userId
       );
       notes = myNotesManager.getNotes();
       expect(notes).toEqual([note1]);
-      myNotesManager.createNote(
-        "Nota2",
-        "Sono la nota 2",
+      const note2 = myNotesManager.createNote(
+        "Note2",
+        "sono la nota 2",
         "",
         false,
         matematicaCourse.courseId,
-        idManager.newValue(),
         anandaUser.userId
       );
       notes = myNotesManager.getNotes();
@@ -88,10 +83,21 @@ describe("Class MyNotesManager", () => {
   describe("Metodo deleteNote", () => {
     test("Elimina una nota della lista delle mie note", () => {
       let notes = myNotesManager.getNotes();
-      expect(notes).toEqual([note1, note2]);
-      myNotesManager.deleteNote(note1);
+      expect(notes).toEqual([nota1, nota2]);
+      myNotesManager.deleteNote(nota1.noteId);
       notes = myNotesManager.getNotes();
-      expect(notes).toEqual([note1]);
+      expect(notes).toEqual([nota2]);
+    });
+  });
+  describe("Metodo isPublicNote", () => {
+    test("Settare una nota come pubblica", () => {
+      let notes = myNotesManager.getNotes();
+      expect(notes).toEqual([nota2]);
+      expect(nota2.isPublic).toEqual(false);
+      myNotesManager.isPubblicNote;
+      notes = myNotesManager.getNotes();
+      expect(notes).toEqual([nota2]);
+      expect(nota2.isPublic).toEqual(true);
     });
   });
 });

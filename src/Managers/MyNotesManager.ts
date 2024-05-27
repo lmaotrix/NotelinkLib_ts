@@ -1,10 +1,14 @@
+import { NumericIdentityManager } from "@mantlebee/ts-core";
+
 import { IMyNotesManager } from "../Interfaces/IMyNotesManager";
 import { Note } from "../Models/notes";
 
 export class MyNotesManager implements IMyNotesManager {
   private _notes: Note[];
+  private _count: number;
   public constructor() {
     this._notes = [];
+    this._count = 0;
   }
 
   public createNote(
@@ -13,9 +17,11 @@ export class MyNotesManager implements IMyNotesManager {
     file: string,
     isPublic: boolean,
     courseId: number,
-    noteId: number,
     userId: number
   ): Note {
+    // const idManager = new NumericIdentityManager();
+    // let noteId = idManager.newValue();
+    let noteId = ++this._count;
     const note = new Note(
       title,
       text,
@@ -25,14 +31,18 @@ export class MyNotesManager implements IMyNotesManager {
       noteId,
       userId
     );
+
     this._notes.push(note);
     return note;
   }
-  public deleteNote(note: Note): void {
-    const index = this._notes.indexOf(note);
-    if (index !== -1) this._notes.splice(index, 1);
+  public deleteNote(noteId: number): void {
+    this._notes = this._notes.filter((a) => a.noteId !== noteId);
   }
+
   getNotes(): Note[] {
     return [...this._notes];
+  }
+  isPubblicNote(note: Note): void {
+    note.isPublic = true;
   }
 }

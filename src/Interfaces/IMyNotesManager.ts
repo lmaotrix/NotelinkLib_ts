@@ -7,9 +7,9 @@ export interface IMyNotesManager {
     file: string,
     isPublic: boolean,
     courseId: number,
-    noteId: number,
     userId: number
   ): Note;
-  deleteNote(note: Note): void;
+  deleteNote(noteId: number): void;
   getNotes(): Note[];
+  isPubblicNote(note: Note): void;
 }

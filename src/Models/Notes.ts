@@ -23,22 +23,10 @@ export class Note {
     this._noteId = noteId;
     this._userId = userId;
   }
-  get courseId() {
-    return this._courseId;
-  }
-  get file() {
-    return this._file;
-  }
   get isPublic() {
     return this._isPublic;
   }
-  get text() {
-    return this._text;
-  }
-  get title() {
-    return this._title;
-  }
-  get userId() {
-    return this._userId;
+  get noteId() {
+    return this._noteId;
   }
 }
