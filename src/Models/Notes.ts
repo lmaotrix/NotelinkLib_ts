@@ -1,7 +1,7 @@
 export class Note {
   private _courseId: number;
   private _file: string;
-  private _isPublic: boolean;
+  public isPublic: boolean;
   private _noteId: number;
   private _text: string;
   private _title: string;
@@ -18,14 +18,12 @@ export class Note {
     this._title = title;
     this._text = text;
     this._file = file;
-    this._isPublic = isPublic;
+    this.isPublic = isPublic;
     this._courseId = courseId;
     this._noteId = noteId;
     this._userId = userId;
   }
-  get isPublic() {
-    return this._isPublic;
-  }
+
   get noteId() {
     return this._noteId;
   }

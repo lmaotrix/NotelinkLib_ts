@@ -94,9 +94,8 @@ describe("Class MyNotesManager", () => {
       let notes = myNotesManager.getNotes();
       expect(notes).toEqual([nota2]);
       expect(nota2.isPublic).toEqual(false);
-      myNotesManager.isPubblicNote;
+      myNotesManager.isPubblicNote(nota2);
       notes = myNotesManager.getNotes();
-      expect(notes).toEqual([nota2]);
       expect(nota2.isPublic).toEqual(true);
     });
   });
