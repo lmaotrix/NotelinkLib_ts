@@ -149,6 +149,9 @@ describe("Class SharedNotesManager", () => {
       sharedNotesManager.likedNote(nota3.noteId, nota3.userId, true);
       likeNotes = sharedNotesManager.getLikesOnNote();
       expect(likeNotes).toEqual([liketest]);
-    });
+      sharedNotesManager.likedNote(nota3.noteId, nota3.userId, true);
+      likeNotes = sharedNotesManager.getLikesOnNote();
+      expect(likeNotes).toEqual([liketest]);
+      
   });
-});
+})

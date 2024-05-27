@@ -42,11 +42,13 @@ export class SharedNotesManager implements ISharedNotesManager {
 
   public likedNote(noteId: number, userId: number, liked: boolean): void {
     const noteLiked = this.getNoteLikes(noteId);
-    if (noteLiked?.noteId === noteId || noteLiked?.userId === userId) {
+    if (noteLiked?.userId === userId) {
       if (noteLiked.liked) {
-        noteLiked.liked = false;
+        //noteLiked.liked = false;
+        this._likedNotes.map((a) => a.liked === false);
       } else {
-        noteLiked.liked = true;
+        //noteLiked.liked = true;
+        this._likedNotes.map((a) => a.liked === false);
       }
     } else {
       const addLikeToANote = new LikeANotes(noteId, userId, true);
