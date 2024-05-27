@@ -10,12 +10,11 @@ import {
 
 // import { NumericIdentityManager } from "@mantlebee/ts-core";
 
-import { Course } from "../src/Models/courses";
-import { Institution } from "../src/Models/institutions";
 import { Note } from "../src/Models/notes";
-import { User } from "../src/Models/users";
 import { MyNotesManager } from "../src/Managers/myNotesManager";
 import { NoteLinkManager } from "../src/Managers/noteLinkManager";
+import { SharedNotesManager } from "../src/Managers/sharedNotesManager";
+import { LikeANotes } from "../src/Models/likes";
 
 // const idManager = new NumericIdentityManager();
 const noteLinkManager = new NoteLinkManager();
@@ -51,12 +50,21 @@ const nota2 = new Note(
   2,
   anandaUser.userId
 );
-
+const nota3 = new Note(
+  "Note3",
+  "sono la nota 3",
+  "",
+  true,
+  matematicaCourse.courseId,
+  3,
+  anandaUser.userId
+);
+const liketest = new LikeANotes(nota3.noteId, nota3.userId, true);
 describe("Class MyNotesManager", () => {
   describe("Metodo createNote", () => {
     test("Crea una o più note", () => {
-      let notes = myNotesManager.getNotes();
-      expect(notes).toEqual([]);
+      let myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([]);
       const note1 = myNotesManager.createNote(
         "Note1",
         "sono la nota 1",
@@ -65,8 +73,8 @@ describe("Class MyNotesManager", () => {
         matematicaCourse.courseId,
         anandaUser.userId
       );
-      notes = myNotesManager.getNotes();
-      expect(notes).toEqual([note1]);
+      myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([note1]);
       const note2 = myNotesManager.createNote(
         "Note2",
         "sono la nota 2",
@@ -75,55 +83,72 @@ describe("Class MyNotesManager", () => {
         matematicaCourse.courseId,
         anandaUser.userId
       );
-      notes = myNotesManager.getNotes();
-      expect(notes).toEqual([note1, note2]);
+      myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([note1, note2]);
     });
   });
 
   describe("Metodo deleteNote", () => {
     test("Elimina una nota della lista delle mie note", () => {
-      let notes = myNotesManager.getNotes();
-      expect(notes).toEqual([nota1, nota2]);
+      let myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([nota1, nota2]);
       myNotesManager.deleteNote(nota1.noteId);
-      notes = myNotesManager.getNotes();
-      expect(notes).toEqual([nota2]);
+      myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([nota2]);
     });
   });
   describe("Metodo isPublicNote", () => {
     test("Settare una nota come pubblica", () => {
-      let notes = myNotesManager.getNotes();
-      expect(notes).toEqual([nota2]);
+      let myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([nota2]);
       expect(nota2.isPublic).toEqual(false);
       myNotesManager.isPubblicNote(nota2);
-      notes = myNotesManager.getNotes();
+      myNotes = myNotesManager.getNotes();
       expect(nota2.isPublic).toEqual(true);
+      myNotesManager.isPubblicNote(nota2);
+      myNotes = myNotesManager.getNotes();
+      expect(nota2.isPublic).toEqual(false);
     });
   });
 });
 
-// describe("Class SharedNotesManager", () => {
-//   const sharedNotesManager = new SharedNotesManager();
-//   describe("Metodo addSharedNotes", () => {
-//     test("Aggiunge una nota pubblica nella lista delle note condivise", () => {
-//       const myNotesManager = getMyNotesManager();
-//       let sharedNotes = sharedNotesManager.getSharedNotes();
-//       expect(sharedNotes).toEqual([]);
-//       sharedNotesManager.addSharedNotes(myNotesManager.getNotes());
-//       sharedNotes = sharedNotesManager.getSharedNotes();
-//       expect(sharedNotes).toEqual([note2]);
-//     });
-//});
+describe("Class SharedNotesManager", () => {
+  const sharedNotesManager = new SharedNotesManager();
+  describe("Metodo getSharedNotes", () => {
+    test("Aggiunge una nota pubblica nella lista delle note condivise", () => {
+      const note3 = myNotesManager.createNote(
+        "Note3",
+        "sono la nota 3",
+        "",
+        true,
+        matematicaCourse.courseId,
+        anandaUser.userId
+      );
+      let myNotes = myNotesManager.getNotes();
+      expect(myNotes).toEqual([nota2, nota3]);
+      const sharedNotes = sharedNotesManager.getSharedNotes(myNotes);
+      expect(sharedNotes).toEqual([nota3]);
+    });
+  });
 
-//   describe("Metodo likeANotes", () => {
-//     test("Mettere like ad una nota", () => {
-//       const myNotesManager = getMyNotesManager();
-//       sharedNotesManager.addSharedNotes(myNotesManager.getNotes());
-//       let sharedNotes = sharedNotesManager.getSharedNotes();
-//       expect(sharedNotes).toEqual([note2]);
-//       let votes = sharedNotesManager.likedNote(note2, user1, LikeType.Like);
-//       expect(votes).toEqual([vote1]);
-//       votes = sharedNotesManager.likedNote(note3, user1, LikeType.Dislike);
-//       expect(votes).toEqual([vote1, vote2]);
-//     });
-//   });
-//});
+  // describe("Metodo cloneOnMyNotes", () => {
+  //   test("Il metodo deve clonare una nota pubblica nelle mie note", () => {
+  //     let myNotes = myNotesManager.getNotes();
+  //     expect(myNotes).toEqual([nota2, nota3]);
+  //     sharedNotesManager.cloneOnMyNotes(nota2, anandaUser);
+  //     myNotes = myNotesManager.getNotes();
+  //     expect(myNotes).toEqual([nota2, nota3, nota2]);
+  //     // non funziona ???
+  //   });
+  //});
+
+  describe("Metodo likeANotes", () => {
+    test("Mettere like ad una nota", () => {
+      let likeNotes = sharedNotesManager.getLikesOnNote();
+      expect(likeNotes).toEqual([]);
+      sharedNotesManager.likedNote(nota3.noteId, nota3.userId, true);
+      likeNotes = sharedNotesManager.getLikesOnNote();
+      expect(likeNotes).toEqual([liketest]);
+    });
+  });
+});

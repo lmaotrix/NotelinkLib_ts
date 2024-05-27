@@ -12,5 +12,6 @@ export interface INoteLinkManager {
     email: string,
     institutionId: number
   ): User;
-  
+  deleteUser(userId: number): void;
+  getUser(userId: number): User;
 }

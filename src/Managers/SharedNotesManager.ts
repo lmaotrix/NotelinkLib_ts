@@ -2,51 +2,55 @@ import { NumericIdentityManager } from "@mantlebee/ts-core";
 
 import { ISharedNotesManager } from "../Interfaces/IsharedNotesManager";
 import { Note } from "../Models/notes";
+import { User } from "../Models/users";
+import { MyNotesManager } from "./myNotesManager";
+import { LikeANotes } from "../Models/likes";
 
 export class SharedNotesManager implements ISharedNotesManager {
   private _sharedNotes: Note[];
+  private _likedNotes: LikeANotes[];
 
   public constructor() {
     this._sharedNotes = [];
+    this._likedNotes = [];
+  }
+  public cloneOnMyNotes(note: Note, user: User): void {
+    const myNotesManager = new MyNotesManager();
+    myNotesManager.createNote(
+      note.title,
+      note.text,
+      note.file,
+      false,
+      note.courseId,
+      user.userId
+    );
   }
 
-  // addToMyNotes(note: Note): Note {
-  //   const idManager = new NumericIdentityManager();
-  //   const clonedNote = new Note(
-  //     note.title,
-  //     note.text,
-  //     "",
-  //     false,
-  //     note.courseId,
-  //     idManager.newValue(),
-  //     note.userId
-  //   );
-  //   return clonedNote;
-  // }
-  getSharedNotes(allNotes: Note[]): Note[] {
+  public getSharedNotes(allNotes: Note[]): Note[] {
     this._sharedNotes = allNotes.filter((a) => a.isPublic);
     return [...this._sharedNotes];
   }
-  likedNote(noteId: number, userId: number, liked: boolean): void {
-    throw new Error("Method not implemented.");
+  public getNoteLikes(noteId: number): LikeANotes | undefined {
+    const note = this._likedNotes.find((a) => {
+      a.noteId === noteId;
+    });
+    return note;
+  }
+  public getLikesOnNote(): LikeANotes[] {
+    return [...this._likedNotes];
   }
 
-  // public likedNote(note: Note, user: User, vote: LikeType): LikeNote[] {
-  //   if (vote === LikeType.Like) {
-  //     const voteLike = {
-  //       noteId: note.noteId,
-  //       userId: user.userId,
-  //       vote: LikeType.Like,
-  //     };
-  //     this._votes.push(voteLike);
-  //   } else if (vote === LikeType.Dislike) {
-  //     const votedislike = {
-  //       noteId: note.noteId,
-  //       userId: user.userId,
-  //       vote: LikeType.Dislike,
-  //     };
-  //     this._votes.push(votedislike);
-  //   }
-  //   return [...this._votes];
-  // }
+  public likedNote(noteId: number, userId: number, liked: boolean): void {
+    const noteLiked = this.getNoteLikes(noteId);
+    if (noteLiked?.noteId === noteId || noteLiked?.userId === userId) {
+      if (noteLiked.liked) {
+        noteLiked.liked = false;
+      } else {
+        noteLiked.liked = true;
+      }
+    } else {
+      const addLikeToANote = new LikeANotes(noteId, userId, true);
+      this._likedNotes.push(addLikeToANote);
+    }
+  }
 }

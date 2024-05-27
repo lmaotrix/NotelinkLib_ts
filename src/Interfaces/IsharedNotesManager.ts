@@ -1,8 +1,11 @@
+import { LikeANotes } from "../Models/likes";
 import { Note } from "../Models/notes";
 import { User } from "../Models/users";
 
 export interface ISharedNotesManager {
-  addToMyNotes(note: Note): Note;
-  getSharedNotes(allNotes: Note[]): Note[];
+  cloneOnMyNotes(note: Note, user: User): void;
   likedNote(noteId: number, userId: number, liked: boolean): void;
+  getNoteLikes(noteId: number): LikeANotes | undefined;
+  getLikesOnNote(): LikeANotes[];
+  getSharedNotes(allNotes: Note[]): Note[];
 }

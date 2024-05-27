@@ -43,6 +43,10 @@ export class MyNotesManager implements IMyNotesManager {
     return [...this._notes];
   }
   isPubblicNote(note: Note): void {
-    note.isPublic = true;
+    if (note.isPublic) {
+      note.isPublic = false;
+    } else {
+      note.isPublic = true;
+    }
   }
 }

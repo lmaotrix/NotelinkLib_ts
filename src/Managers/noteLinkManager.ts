@@ -29,4 +29,11 @@ export class NoteLinkManager implements INoteLinkManager {
     const user = new User(firstName, lastName, email, institutionId, userId);
     return user;
   }
+  deleteUser(userId: number): void {
+    throw new Error("Method not implemented.");
+  }
+
+  getUser(userId: number): User {
+    throw new Error("Method not implemented.");
+  }
 }
