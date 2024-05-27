@@ -131,4 +131,27 @@ describe("Class SharedNotesManager", () => {
     });
   });
 
+  // describe("Metodo cloneOnMyNotes", () => {
+  //   test("Il metodo deve clonare una nota pubblica nelle mie note", () => {
+  //     let myNotes = myNotesManager.getNotes();
+  //     expect(myNotes).toEqual([nota2, nota3]);
+  //     sharedNotesManager.cloneOnMyNotes(nota2, anandaUser);
+  //     myNotes = myNotesManager.getNotes();
+  //     expect(myNotes).toEqual([nota2, nota3, nota2]);
+  //     // non funziona ???
+  //   });
+  //});
+
+  describe("Metodo likeANotes", () => {
+    test("Mettere like ad una nota", () => {
+      let likeNotes = sharedNotesManager.getLikesOnNote();
+      expect(likeNotes).toEqual([]);
+      sharedNotesManager.likedNote(nota3.noteId, nota3.userId, true);
+      likeNotes = sharedNotesManager.getLikesOnNote();
+      expect(likeNotes).toEqual([liketest]);
+      sharedNotesManager.likedNote(nota3.noteId, nota3.userId, true);
+      likeNotes = sharedNotesManager.getLikesOnNote();
+      expect(likeNotes).toEqual([liketest]);
+    });
+  });
 });
