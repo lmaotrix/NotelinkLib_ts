@@ -11,9 +11,9 @@ import {
 // import { NumericIdentityManager } from "@mantlebee/ts-core";
 
 import { Note } from "../src/Models/notes";
-import { MyNotesManager } from "../src/Managers/myNotesManager";
+import { MyNotesManager } from "../src/Managers/MyNotesManager";
 import { NoteLinkManager } from "../src/Managers/noteLinkManager";
-import { SharedNotesManager } from "../src/Managers/sharedNotesManager";
+import { SharedNotesManager } from "../src/Managers/SharedNotesManager";
 import { LikeANotes } from "../src/Models/likes";
 
 // const idManager = new NumericIdentityManager();
@@ -151,7 +151,8 @@ describe("Class SharedNotesManager", () => {
       expect(likeNotes).toEqual([liketest]);
       sharedNotesManager.likedNote(nota3.noteId, nota3.userId, true);
       likeNotes = sharedNotesManager.getLikesOnNote();
-      expect(likeNotes).toEqual([liketest]);
+expect(likeNotes).toEqual([liketest]);
       
+    });
   });
-})
+});

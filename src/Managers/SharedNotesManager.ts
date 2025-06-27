@@ -3,7 +3,7 @@ import { NumericIdentityManager } from "@mantlebee/ts-core";
 import { ISharedNotesManager } from "../Interfaces/IsharedNotesManager";
 import { Note } from "../Models/notes";
 import { User } from "../Models/users";
-import { MyNotesManager } from "./myNotesManager";
+import { MyNotesManager } from "./MyNotesManager";
 import { LikeANotes } from "../Models/likes";
 
 export class SharedNotesManager implements ISharedNotesManager {
@@ -31,9 +31,7 @@ export class SharedNotesManager implements ISharedNotesManager {
     return [...this._sharedNotes];
   }
   public getNoteLikes(noteId: number): LikeANotes | undefined {
-    const note = this._likedNotes.find((a) => {
-      a.noteId === noteId;
-    });
+    const note = this._likedNotes.find((a) => a.noteId === noteId);
     return note;
   }
   public getLikesOnNote(): LikeANotes[] {
@@ -41,17 +39,14 @@ export class SharedNotesManager implements ISharedNotesManager {
   }
 
   public likedNote(noteId: number, userId: number, liked: boolean): void {
-    const noteLiked = this.getNoteLikes(noteId);
-    if (noteLiked?.userId === userId) {
-      if (noteLiked.liked) {
-        //noteLiked.liked = false;
-        this._likedNotes.map((a) => a.liked === false);
-      } else {
-        //noteLiked.liked = true;
-        this._likedNotes.map((a) => a.liked === false);
-      }
+    const existingLike = this._likedNotes.find((a) => a.noteId === noteId && a.userId === userId);
+    
+    if (existingLike) {
+      // Update the existing like status
+      existingLike.liked = liked;
     } else {
-      const addLikeToANote = new LikeANotes(noteId, userId, true);
+      // Add a new like
+      const addLikeToANote = new LikeANotes(noteId, userId, liked);
       this._likedNotes.push(addLikeToANote);
     }
   }
